@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Todo from './pages/todo';
+import {Provider as reactProvider} from 'react-redux';
+import configureStore from './modules/store';
+
+const reduxStore = configureStore(window.REDUX_INITIAL_DATA);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <ReduxProvider store={reduxStore}>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Todo React - Redux app</h1>
+          </header>
+          <ToDO />
+        </div>
+      </ReduxProvider>
     );
   }
 }
