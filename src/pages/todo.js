@@ -13,11 +13,17 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CopyIcon from "@material-ui/icons/FileCopy";
+import { connect } from 'react-redux';
 
 /**define custom styles over here */
 const styles = theme => ({});
 
 class Todo extends Component {
+
+    constructor() {
+        super(this);
+    }
+
     state = {};
 
     generate = () => {
@@ -44,6 +50,50 @@ class Todo extends Component {
         });
     };
 
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <div>
+                <div>
+                    <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+                        <FormControl>
+                            <TextField
+                                label="New Task"
+                                id="margin-dense"
+                                value={this.state.item}
+                                className={classes.textField}
+                                margin="dense"
+                                name="item"
+                                onChange={this.handleChange}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <Button>Add</Button>
+                        </FormControl>
+                    </form>
+                </div>
+                <div>
+                    <Grid item container justify="space-evenly" alignItems="center">
+                        <div className={classes.demo}>
+                            <List dense={false}>{this.generate()}</List>
+                        </div>
+                    </Grid>
+                </div>
+            </div>
+        );
+    }
+
 }
 
-export default withStyles(styles)(Todo);
+const mapStatetoProps = state => ({
+    items: state.items
+});
+
+const mapDispatchtoProps = dispacth => ({
+    createItem: item = dispacth.createItem(item),
+    copyItem: id = dispacth.copyItem(id),
+    deleteItem: id = dispacth.deleteItem(id)
+});
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(withStyles(styles)(Todo));
