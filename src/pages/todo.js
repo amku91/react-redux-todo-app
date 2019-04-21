@@ -50,6 +50,27 @@ class Todo extends Component {
         });
     };
 
+    /**handlers methods */
+    handleSubmit = event => {
+        this.setState({ item: "" });
+        if (this.state.item !== "") {
+            this.props.createItem(this.state.item);
+        }
+        event.preventDefault();
+    };
+    handleCopy = event => {
+        this.props.deleteItem(event.target.value);
+    };
+    handleDelete = event => {
+        this.props.deleteItem(event.target.value);
+    };
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+
+
     render() {
         const { classes } = this.props;
 
